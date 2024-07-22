@@ -68,13 +68,13 @@ jobs:
         with:
           version: 'latest'
       
-      - name: Create Namespace nginx
+      - name: Create Namespace cert-manager
         run: kubectl apply -f ${{ github.workspace }}/namespace_cert-manager.yaml
 
-      - name: Helm Add nginx to Repository
+      - name: Helm Add cert-manager to Repository
         run: helm repo --namespace cert-manager add jetstack https://charts.jetstack.io
 
-      - name: Helm Add nginx to Repository
+      - name: Helm install cert-manager
         run: helm install --namespace cert-manager cert-manager --wait --version v1.9.1 --set installCRDs=true jetstack/cert-manager
 
       - name: Deploy Cert Manager
