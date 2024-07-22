@@ -40,14 +40,12 @@ jobs:
           version: 'latest'
 
       - name: Helm Add nginx to Repository
-        if: always()
         run: helm repo --namespace nginx add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
       - name: Create Directory Path
         run: mkdir -p ${{ github.workspace }}/kubernetes/ingress/controller/nginx/manifests/
 
       - name: Helm Create nginx Template
-        if: always()
         run: |
           helm template nginx ingress-nginx \
           --repo https://kubernetes.github.io/ingress-nginx \
@@ -57,4 +55,28 @@ jobs:
 
       - name: Deploy nginx Template
         run: kubectl apply -f ${{ github.workspace }}/kubernetes/ingress/controller/nginx/manifests/nginx-ingress.${APP_VERSION}.yaml
-        
+  
+  deploy_cert_manager:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Create Namespace nginx
+        run: kubectl apply -f ${{ github.workspace }}/namespace_cert-manager.yaml
+
+      - name: Helm Add nginx to Repository
+        run: helm repo --namespace cert-manager add jetstack https://charts.jetstack.io
+
+      - name: Helm Add nginx to Repository
+        run: helm install --namespace cert-manager cert-manager --wait --version v1.9.1 --set installCRDs=true jetstack/cert-manager
+
+      - name: Deploy Cert Manager
+        run: kubectl apply -f ${{ github.workspace }}/cert-manager.yaml
+      
