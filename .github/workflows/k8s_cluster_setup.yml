@@ -32,7 +32,7 @@ jobs:
           version: 'latest'
       
       - name: Create Namespace nginx
-        run: kubectl apply -f ${{ github.workspace }}/kubernetes/namespace_nginx.yaml
+        run: kubectl apply -f ${{ github.workspace }}/namespace_nginx.yaml
 
       - name: Install Helm
         uses: azure/setup-helm@v3
