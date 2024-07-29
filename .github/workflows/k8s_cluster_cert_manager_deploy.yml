@@ -2,14 +2,9 @@ name: Setup Cert Manager Kubernetes Cluster
 
 on:
   push:
-    branches: [ "cert_manager" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "cert_manager" ]
-  
-
-env:
-  CHART_VERSION: 4.11.1
-  APP_VERSION: 1.11.1
+    branches: [ "main" ]
 
 jobs:
   deploy_cert_manager:
@@ -32,9 +27,7 @@ jobs:
           version: 'latest'
       
       - name: Create Namespace cert-manager
-        run: |
-          kubectl get pods
-          kubectl apply -f ${{ github.workspace }}/namespace_cert-manager.yaml
+        run: kubectl apply -f ${{ github.workspace }}/namespace_cert-manager.yaml
 
       - name: Helm Add cert-manager to Repository
         run: helm repo --namespace cert-manager add jetstack https://charts.jetstack.io
