@@ -51,7 +51,7 @@ jobs:
         run: |
           helm template nginx ingress-nginx \
           --repo https://kubernetes.github.io/ingress-nginx \
-          --version ${CHART_VERSION} \
+          --version ${CHART_VERSI2ON} \
           --namespace nginx \
           > ${{ github.workspace }}/kubernetes/ingress/controller/nginx/manifests/nginx-ingress.${APP_VERSION}.yaml
 
