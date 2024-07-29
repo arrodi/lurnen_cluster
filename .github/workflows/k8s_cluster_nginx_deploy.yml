@@ -40,7 +40,9 @@ jobs:
           version: 'latest'
 
       - name: Helm Add nginx to Repository
-        run: helm repo --namespace nginx add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        run: |
+          helm repo --namespace nginx add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm search repo ingress-nginx --versions
 
       - name: Create Directory Path
         run: mkdir -p ${{ github.workspace }}/kubernetes/ingress/controller/nginx/manifests/
