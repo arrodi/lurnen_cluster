@@ -1,4 +1,4 @@
-name: Setup Kubernetes Cluster
+name: Setup Nginx Kubernetes Cluster
 
 on:
   push:

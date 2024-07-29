@@ -1,4 +1,4 @@
-name: Setup Kubernetes Cluster
+name: Setup Cert Manager Kubernetes Cluster
 
 on:
   push:
